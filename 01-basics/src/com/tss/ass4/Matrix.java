@@ -7,9 +7,9 @@ public class Matrix {
 
     public static void main(String[] args) {
 
-        System.out.println("Enter value of m: ");
+        System.out.print("Enter value of m: ");
         int m = scan.nextInt();
-        System.out.println("Enter value of n: ");
+        System.out.print("Enter value of n: ");
         int n = scan.nextInt();
 
         int[][] matrix1 = new int[m][n];
@@ -29,7 +29,7 @@ public class Matrix {
             int opt = 0;
 
             while (true) {
-                System.out.println("Select option 1-7: ");
+                System.out.print("Select option 1-7: ");
                 opt = scan.nextInt();
 
                 if (opt >= 0 && opt <= 7)   break;
@@ -46,6 +46,7 @@ public class Matrix {
                     createMatrix(m, n, matrix1);
                     System.out.println("Enter elements of matrix2:");
                     createMatrix(m, n, matrix2);
+                    reset(m,n,additionMatrix, multiplicationMatrix);
                     break;
                 case 2:
                     System.out.println("Display Matrix1 :");
@@ -76,6 +77,15 @@ public class Matrix {
 
         }
 
+    }
+
+    private static void reset(int m, int n, int[][] additionMatrix, int[][] multiplicationMatrix) {
+        for (int i = 0; i < m; i++) {
+            for (int j = 0; j < n; j++) {
+                additionMatrix[i][j] = 0;
+                multiplicationMatrix[i][j] = 0;
+            }
+        }
     }
 
     private static boolean checkMagicaMatrix(int m, int n, int[][] matrix) {
@@ -113,9 +123,8 @@ public class Matrix {
     private static boolean checkPrimeHarmonicMatrix(int m, int n, int[][] matrix) {
         for (int i = 0; i < m; i++) {
             int primeCount = 0;
-            for (int j = 0; j < n; j++) {
+            for (int j = 0; j < n; j++)
                 if(isPrime(matrix[i][j]))   primeCount++;
-            }
             if(primeCount != 3) return false;
         }
         return true;
@@ -126,12 +135,10 @@ public class Matrix {
         if (num == 2)   return true;
         if (num % 2 == 0) return false;
 
-        for (int i = 3; i <= (int) Math.sqrt(num); i+=2) {
+        for (int i = 3; i <= (int) Math.sqrt(num); i+=2)
             if (num % i == 0)   return false;
-        }
 
         return true;
-
     }
 
     private static void createMatrix(int m, int n, int[][] matrix) {
@@ -143,15 +150,10 @@ public class Matrix {
     }
 
     private static void multiplication(int m, int n, int[][] matrix1, int[][] matrix2, int[][] multiplicationMatrix) {
-
         if (m != n) {
             System.out.println("You can not multiply...!");
             return;
         }
-
-        for (int i = 0; i < m; i++)
-            for (int j = 0; j < n; j++)
-                    multiplicationMatrix[i][j] = 0;
 
         for (int i = 0; i < m; i++) {
             for (int j = 0; j < n; j++) {
@@ -163,11 +165,6 @@ public class Matrix {
     }
 
     private static void addition(int m, int n, int[][] matrix1, int[][] matrix2, int[][] additionMatrix) {
-
-        for (int i = 0; i < m; i++)
-            for (int j = 0; j < n; j++)
-                additionMatrix[i][j] = 0;
-
         for (int i = 0; i < m; i++) {
             for (int j = 0; j < n; j++) {
                 additionMatrix[i][j] = matrix1[i][j] + matrix2[i][j];
