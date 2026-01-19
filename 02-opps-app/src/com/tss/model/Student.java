@@ -12,11 +12,11 @@ public class Student {
     }
 
     public Student(int id, String name, String course, double feesPaid, double totalFees) {
-        this.id = id;
-        this.name = name;
-        this.course = course;
-        this.feesPaid = feesPaid;
-        this.totalFees = totalFees;
+        setId(id);
+        setName(name);
+        setCourse(course);
+        setFeesPaid(feesPaid);
+        setTotalFees(totalFees);
     }
 
     public int getId() {
@@ -24,6 +24,9 @@ public class Student {
     }
 
     public void setId(int id) {
+        if(id < 0) {
+            throw new IllegalArgumentException("ID must be positive");
+        }
         this.id = id;
     }
 
@@ -32,6 +35,12 @@ public class Student {
     }
 
     public void setName(String name) {
+        if(name == null || name.trim().isBlank()) {
+            throw new IllegalArgumentException("Name cannot be empty");
+        }
+        if(!name.matches("[a-zA-Z ]+")) {
+            throw new IllegalArgumentException("Name must contain only letters");
+        }
         this.name = name;
     }
 
@@ -40,6 +49,12 @@ public class Student {
     }
 
     public void setCourse(String course) {
+        if(course == null || course.trim().isBlank()) {
+            throw new IllegalArgumentException("Course cannot be empty");
+        }
+        if(!course.matches("[a-zA-Z ]+")) {
+            throw new IllegalArgumentException("Course must contain only letters");
+        }
         this.course = course;
     }
 
@@ -48,6 +63,12 @@ public class Student {
     }
 
     public void setFeesPaid(double feesPaid) {
+        if(feesPaid < 0) {
+            throw new IllegalArgumentException("Paid fees cannot be negative");
+        }
+        if(this.totalFees > 0 && feesPaid > totalFees) {
+            throw new IllegalArgumentException("Paid fees cannot exceed total fees");
+        }
         this.feesPaid = feesPaid;
     }
 
@@ -56,10 +77,22 @@ public class Student {
     }
 
     public void setTotalFees(double totalFees) {
+        if (totalFees <= 0) {
+            throw new IllegalArgumentException("Total fees must be positive.");
+        }
+        if (totalFees < feesPaid) {
+            throw new IllegalArgumentException("Total fees must be greater or equal paid fees.");
+        }
         this.totalFees = totalFees;
     }
 
     public void payFees(double amount) {
+        if (amount <= 0) {
+            throw new IllegalArgumentException("Payment amount must be positive");
+        }
+        if (feesPaid + amount > totalFees) {
+            throw new IllegalArgumentException("Cannot pay more than total fees");
+        }
         feesPaid += amount;
     }
 
