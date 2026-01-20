@@ -1,4 +1,4 @@
-package com.tss.model;
+package com.tss.ass1.model;
 
 public class Box {
     private double width;

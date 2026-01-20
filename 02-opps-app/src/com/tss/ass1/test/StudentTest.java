@@ -1,6 +1,6 @@
-package com.tss.test;
+package com.tss.ass1.test;
 
-import com.tss.model.Student;
+import com.tss.ass1.model.Student;
 
 import java.util.InputMismatchException;
 import java.util.Scanner;
@@ -109,7 +109,7 @@ public class StudentTest {
 
                 case 2:
                     if (s.getPendingFees() == 0) {
-                        System.out.println("All fees are cdalready paid.");
+                        System.out.println("All fees are already paid.");
                         break;
                     }
                     while(true) {

@@ -1,4 +1,4 @@
-package com.tss.model;
+package com.tss.ass2.model;
 
 public class Student {
     private int id;
@@ -114,5 +114,6 @@ public class Student {
         System.out.println("Course: " + course);
         System.out.println("Fees Paid: " + feesPaid);
         System.out.println("Total Fees: " + totalFees);
+        System.out.println("---------------------------");
     }
 }

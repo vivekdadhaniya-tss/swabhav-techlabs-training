@@ -1,6 +1,6 @@
-package com.tss.test;
+package com.tss.ass1.test;
 
-import com.tss.model.Box;
+import com.tss.ass1.model.Box;
 import java.util.Scanner;
 
 public class BoxTest {
