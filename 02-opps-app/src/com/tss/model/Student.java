@@ -87,14 +87,22 @@ public class Student {
     }
 
     public void payFees(double amount) {
+
         if (amount <= 0) {
-            throw new IllegalArgumentException("Payment amount must be positive");
+            throw new IllegalArgumentException("Payment amount must be greater than 0.");
         }
-        if (feesPaid + amount > totalFees) {
-            throw new IllegalArgumentException("Cannot pay more than total fees");
+
+        double pendingFees = totalFees - feesPaid;
+
+        if (amount > pendingFees) {
+            throw new IllegalArgumentException(
+                    "You only have " + pendingFees + " rs left, not " + amount + " rs."
+            );
         }
+
         feesPaid += amount;
     }
+
 
     public double getPendingFees() {
         return  (totalFees - feesPaid);

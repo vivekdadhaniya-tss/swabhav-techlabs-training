@@ -108,6 +108,10 @@ public class StudentTest {
                     break;
 
                 case 2:
+                    if (s.getPendingFees() == 0) {
+                        System.out.println("All fees are cdalready paid.");
+                        break;
+                    }
                     while(true) {
                         try {
                             System.out.print("Enter amount to pay: ");
