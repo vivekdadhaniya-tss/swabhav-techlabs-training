@@ -158,8 +158,6 @@ public class StudentManagementSystem {
             } catch (InputMismatchException e) {
                 System.out.println("Enter valid amount.");
                 scan.nextLine();
-            } catch (IllegalArgumentException e) {
-                System.out.println(e.getMessage());
             }
         }
 
