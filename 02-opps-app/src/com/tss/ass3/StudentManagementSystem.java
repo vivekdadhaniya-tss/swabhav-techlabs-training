@@ -5,37 +5,35 @@ import java.util.Scanner;
 
 public class StudentManagementSystem {
 
-    static Scanner scan = new Scanner(System.in);
-    static Student[] students;
-    static Course[] courses = new Course[5];
     static int availableCourseCount = 0;
     static int maxStudents = 10;
     static int currentStudents = 0;
+    static Scanner scan = new Scanner(System.in);
+    static Student[] students = new Student[maxStudents];
+    static Course[] courses = new Course[5];
 
     public static void main(String[] args) {
-
-        students = new Student[maxStudents];
 
         boolean running = true;
 
         while (running) {
             System.out.println("""
-            
-            === Student Management ===
-            1. Create Courses
-            2. Add Student
-            3. Add course to Student
-            4. Pay Fees
-            5. Show Pending Fees
-            6. Display Student
-            7. Display All Students
-            8. Display Student Courses
-            9. Display All Courses
-            0. Exit
-            """);
+                    
+                    === Student Management ===
+                    1. Create Courses
+                    2. Add Student
+                    3. Add course to Student
+                    4. Pay Fees
+                    5. Show Pending Fees
+                    6. Display Student
+                    7. Display All Students
+                    8. Display Student Courses
+                    9. Display All Courses
+                    0. Exit
+                    """);
 
             int choice;
-            while(true) {
+            while (true) {
                 try {
                     System.out.print("Choose option: ");
                     choice = scan.nextInt();
@@ -62,6 +60,49 @@ public class StudentManagementSystem {
             }
         }
         scan.close();
+    }
+
+    private static Student selectStudent() {
+        if (currentStudents == 0) {
+            System.out.println("No students available.");
+            return null;
+        }
+
+        System.out.println("Select a student:");
+        for (int i = 0; i < currentStudents; i++) {
+            System.out.println((i + 1) + ". " + students[i].getName());
+        }
+
+        int choice;
+        while (true) {
+            try {
+                System.out.print("Enter number: ");
+                choice = scan.nextInt();
+                scan.nextLine();
+                if (choice < 1 || choice > currentStudents) {
+                    System.out.println("Invalid selection.");
+                    continue;
+                }
+                return students[choice - 1];
+            } catch (InputMismatchException e) {
+                System.out.println("Enter a valid number.");
+                scan.nextLine();
+            }
+        }
+    }
+
+    private static Student findStudentById(int id) {
+        for (int i = 0; i < currentStudents; i++) {
+            if (students[i].getId() == id) return students[i];
+        }
+        return null;
+    }
+
+    private static Course findCourseById(int id) {
+        for (Course course : courses) {
+            if (course != null && course.getId() == id) return course;
+        }
+        return null;
     }
 
     private static void createCourses() {
@@ -144,67 +185,26 @@ public class StudentManagementSystem {
         Student student = new Student();
 
         while (true) {
-            try {
-                System.out.print("Enter Name: ");
-                String name = scan.nextLine();
-                if(name == null || name.trim().isBlank()) {
-                    System.out.println("Name cannot be empty");
-                    continue;
-                }
-                if(!name.matches("[a-zA-Z ]+")) {
-                    System.out.println("Name must contain only letters");
-                    continue;
-                }
-                student.setName(name);
-                break;
-            } catch (InputMismatchException e) {
-                System.out.println(e.getMessage());
+            System.out.print("Enter Name: ");
+            String name = scan.nextLine();
+            if (name == null || name.trim().isBlank()) {
+                System.out.println("Name cannot be empty");
+                continue;
             }
+            if (!name.matches("[a-zA-Z ]+")) {
+                System.out.println("Name must contain only letters");
+                continue;
+            }
+            student.setName(name);
+            break;
         }
         students[currentStudents++] = student;
         System.out.println("Student added successfully.");
     }
 
-    private static Student selectStudent() {
-        if (currentStudents == 0) {
-            System.out.println("No students available.");
-            return null;
-        }
-
-        System.out.println("Select a student:");
-        for (int i = 0; i < currentStudents; i++) {
-            System.out.println((i + 1) + ". " + students[i].getName());
-        }
-
-        int choice;
-        while (true) {
-            try {
-                System.out.print("Enter number: ");
-                choice = scan.nextInt();
-                scan.nextLine();
-                if (choice < 1 || choice > currentStudents) {
-                    System.out.println("Invalid selection.");
-                    continue;
-                }
-                return students[choice - 1];
-            } catch (InputMismatchException e) {
-                System.out.println("Enter a valid number.");
-                scan.nextLine();
-            }
-        }
-    }
-
-    private static Student studentFindById(int id) {
-        for(int i = 0; i < currentStudents; i++) {
-            if(students[i].getId() == id)
-                return students[i];
-        }
-        return null;
-    }
-
     private static void addCourses() {
 
-        if(availableCourseCount == 0) {
+        if (availableCourseCount == 0) {
             System.out.println("No courses are created yet. Create courses first.");
             return;
         }
@@ -214,19 +214,19 @@ public class StudentManagementSystem {
             return;
         }
 
-        for(int i = 0; i < currentStudents; i++)
+        for (int i = 0; i < currentStudents; i++)
             System.out.println(students[i].getId() + " - " + students[i].getName());
 
         System.out.println("Select the student in which you want to add course: ");
         int studentId = scan.nextInt();
-        Student student = studentFindById(studentId);
+        Student student = findStudentById(studentId);
 
-        if(student == null) {
+        if (student == null) {
             System.out.println("No student available of id: " + studentId);
             return;
         }
 
-        if(student.getCourseCount() == 3) {
+        if (student.getCourseCount() == 3) {
             System.out.println("You enroll 3 courses. Now you cannot enroll any courses.");
             return;
         }
@@ -239,13 +239,13 @@ public class StudentManagementSystem {
                 numberOfCourses = scan.nextInt();
                 scan.nextLine();
 
-                if(numberOfCourses < 1) {
+                if (numberOfCourses < 1) {
                     System.out.println("Enter valid value.");
                     continue;
                 }
 
-                if(numberOfCourses + student.getCourseCount() > 3) {
-                    System.out.println("You can enroll max 3 courses per student.\nCurrently you enroll " + student.getCourseCount() + "courses.\nNow you only enroll " + (3-student.getCourseCount()) + " courses." );
+                if (numberOfCourses + student.getCourseCount() > 3) {
+                    System.out.println("You can enroll max 3 courses per student.\nCurrently you enroll " + student.getCourseCount() + "courses.\nNow you only enroll " + (3 - student.getCourseCount()) + " courses.");
                     continue;
                 }
                 break;
@@ -261,10 +261,10 @@ public class StudentManagementSystem {
         System.out.println("Select the course in which you want to add in student: ");
 
 
-        while(numberOfCourses > 0) {
+        while (numberOfCourses > 0) {
             System.out.print("Add course: ");
             int courseId = scan.nextInt();
-            Course course = courseFindById(courseId);
+            Course course = findCourseById(courseId);
             if (course == null) {
                 System.out.println("Invalid course ID.");
                 continue;
@@ -290,17 +290,9 @@ public class StudentManagementSystem {
         System.out.println("Courses added successfully.");
     }
 
-    private static Course courseFindById(int id) {
-        for (Course course : courses) {
-            if (course != null && course.getId() == id)
-                return course;
-        }
-        return null;
-    }
-
     private static void payFees() {
 
-        if(availableCourseCount == 0) {
+        if (availableCourseCount == 0) {
             System.out.println("No courses available for enroll. First create courses.");
             return;
         }
@@ -312,12 +304,12 @@ public class StudentManagementSystem {
             return;
         }
 
-        if(student.getCourseCount() == 0) {
+        if (student.getCourseCount() == 0) {
             System.out.println("No courses enroll by student.");
             return;
         }
 
-        if(student.getPendingFees() == 0) {
+        if (student.getPendingFees() == 0) {
             System.out.println("You paid all fees.");
             return;
         }
@@ -347,23 +339,19 @@ public class StudentManagementSystem {
     }
 
     private static void showPendingFees() {
-        if(availableCourseCount == 0) {
+        if (availableCourseCount == 0) {
             System.out.println("No courses available for enroll. First create courses.");
             return;
         }
         Student student = selectStudent();
-        if (student != null)
-            System.out.println("Pending Fees: " + student.getPendingFees());
-        else
-            System.out.println("Student not found.");
+        if (student != null) System.out.println("Pending Fees: " + student.getPendingFees());
+        else System.out.println("Student not found.");
     }
 
     private static void displayStudent() {
         Student student = selectStudent();
-        if (student != null)
-            student.displayProfile();
-        else
-            System.out.println("Student not found.");
+        if (student != null) student.displayProfile();
+        else System.out.println("Student not found.");
     }
 
     private static void displayAllStudents() {
@@ -377,7 +365,7 @@ public class StudentManagementSystem {
     }
 
     private static void displayAllStudentCourses() {
-        if(availableCourseCount == 0) {
+        if (availableCourseCount == 0) {
             System.out.println("No courses available for enroll. First create courses.");
             return;
         }
