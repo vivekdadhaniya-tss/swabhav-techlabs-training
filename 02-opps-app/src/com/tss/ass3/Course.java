@@ -1,18 +1,22 @@
-package com.tss.ass2.model;
-
-import java.util.UUID;
+package com.tss.ass3;
 
 public class Course {
-    private String courseId;
+
+    private static int idCounter = 0;
+    private int courseId;
     private String name;
     private double fees;
     private int duration;
 
     public Course(String name, double fees, int duration) {
-        this.courseId = UUID.randomUUID().toString();
+        this.courseId = ++idCounter;
         this.name = name;
         this.fees = fees;
         this.duration = duration;
+    }
+
+    public int getId() {
+        return courseId;
     }
 
     public String getName() {
@@ -43,7 +47,7 @@ public class Course {
         System.out.println("ID      : " + courseId);
         System.out.println("Name    : " + name);
         System.out.println("Fees    : " + fees);
-        System.out.println("Duration: " + duration + " days");
+        System.out.println("Duration: " + duration + " months");
         System.out.println("---------------------------");
     }
 }
