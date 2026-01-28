@@ -12,7 +12,7 @@ public class RotateElement {
 
         int[] nums = new int[size];
 
-        System.out.println("Enter " + "size " + "array elements: ");
+        System.out.println("Enter " + size  + "array elements: ");
         for(int i = 0; i < size; i++) {
             nums[i] = scan.nextInt();
         }
@@ -30,7 +30,7 @@ public class RotateElement {
     }
 
     private static void rotateArr(int[] nums, int rotateValuue, int size) {
-        if(rotateValuue == 0)   return;
+        if(size == 0 || rotateValuue == 0)   return;
         reverse(nums,0,size-1);
         reverse(nums,0,rotateValuue-1);
         reverse(nums,rotateValuue,rotateValuue-1);
@@ -45,4 +45,22 @@ public class RotateElement {
             end--;
         }
     }
+
+//    private static int[] rotateArr(int[] nums, int k, int size) {
+//        int[] result = new int[size];
+//
+//        int index = 0;
+//
+//        // copy last k elements
+//        for (int i = size - k; i < size; i++) {
+//            result[index++] = nums[i];
+//        }
+//
+//        // copy remaining elements
+//        for (int i = 0; i < size - k; i++) {
+//            result[index++] = nums[i];
+//        }
+//
+//        return result;
+//    }
 }

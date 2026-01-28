@@ -10,9 +10,9 @@ public class Palindrome {
 
         String Str = String.valueOf(num);
         StringBuilder numStr = new StringBuilder(Str);
-        StringBuilder revStr = numStr.reverse();
+        String revStr = numStr.reverse().toString();
 
-        if(numStr == revStr) {
+        if(Str.equals(revStr)) {
             System.out.println("Palindrome");
         } else {
             System.out.println("Not Palindrome");

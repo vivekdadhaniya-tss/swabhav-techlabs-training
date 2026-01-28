@@ -11,7 +11,7 @@ public class FindPeakElement {
 
         int []nums = new int[size];
 
-        System.out.println("Enter " + "size " + "array elements: ");
+        System.out.println("Enter " + size  + "array elements: ");
         for(int i = 0; i < size; i++) {
             nums[i] = scan.nextInt();
         }
@@ -27,7 +27,7 @@ public class FindPeakElement {
 
     private static int findPeakElement(int[] nums, int size) {
 
-        if(size ==0) return Integer.MIN_VALUE;
+        if(size == 0) return Integer.MIN_VALUE;
         if(size == 1)   return nums[0];
 
         if(nums[0] > nums[1])   return nums[0];

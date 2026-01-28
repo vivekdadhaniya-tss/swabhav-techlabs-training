@@ -18,7 +18,6 @@ public class PIG {
             play = gameStart();
             System.out.println(play ? "\nNext game start..!" : "\nGame end..!");
         }
-
     }
 
     private static boolean gameStart() {

@@ -13,10 +13,10 @@ public class StudentService {
 
     static Scanner scan = new Scanner(System.in);
 
-    private Student[] students = new Student[MAX_STUDENTS];
+    private final Student[] students = new Student[MAX_STUDENTS];
     private int currentStudents = 0;
 
-    private CourseService courseService;
+    private final CourseService courseService;
 
     public StudentService(CourseService courseService) {
         this.courseService = courseService;
@@ -216,6 +216,4 @@ public class StudentService {
         }
         DisplayUtils.printStudentCoursesOnly(student);
     }
-
-
 }

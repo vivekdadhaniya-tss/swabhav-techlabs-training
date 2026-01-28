@@ -9,7 +9,7 @@ public class GusserGame {
 
 //        Random ranNumber = new Random(100);
         Random ranNumber = new Random();
-        int randomNumber = ranNumber.nextInt(100);
+        int randomNumber = ranNumber.nextInt(101);
 //        int randomNumber = ranNumber.nextInt(100);
 
         Scanner scan = new Scanner(System.in);
