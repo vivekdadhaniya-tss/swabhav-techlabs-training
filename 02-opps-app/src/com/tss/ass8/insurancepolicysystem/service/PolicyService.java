@@ -4,7 +4,7 @@ import com.tss.ass8.insurancepolicysystem.model.HealthInsurancePolicy;
 import com.tss.ass8.insurancepolicysystem.model.InsurancePolicy;
 import com.tss.ass8.insurancepolicysystem.model.LifeInsurancePolicy;
 import com.tss.ass8.insurancepolicysystem.model.VehicleInsurancePolicy;
-import com.tss.ass8.model.*;
+import com.tss.ass8.insurancepolicysystem.model.*;
 import com.tss.ass8.insurancepolicysystem.util.PolicyConstants;
 import com.tss.ass8.insurancepolicysystem.util.PolicyType;
 

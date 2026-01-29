@@ -2,7 +2,7 @@ package com.tss.ass3.studentmanagementsystem.v4.service;
 import com.tss.ass3.studentmanagementsystem.v4.model.Course;
 import com.tss.ass3.studentmanagementsystem.v4.util.DisplayUtils;
 import com.tss.ass3.studentmanagementsystem.v4.util.InputUtils;
-import com.tss.ass3.v4.model.*;
+import com.tss.ass3.studentmanagementsystem.v4.model.*;
 
 import java.util.Scanner;
 
