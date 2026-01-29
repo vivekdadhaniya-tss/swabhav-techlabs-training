@@ -1,6 +1,6 @@
 package com.tss.ass11.vehiclemanagementsystem;
 
-import com.tss.ass11.model.*;
+import com.tss.ass11.vehiclemanagementsystem.model.*;
 import com.tss.ass11.vehiclemanagementsystem.model.*;
 
 import java.util.Scanner;
