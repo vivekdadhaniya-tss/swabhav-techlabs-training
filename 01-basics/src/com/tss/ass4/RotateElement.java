@@ -29,11 +29,11 @@ public class RotateElement {
         }
     }
 
-    private static void rotateArr(int[] nums, int rotateValuue, int size) {
-        if(size == 0 || rotateValuue == 0)   return;
+    private static void rotateArr(int[] nums, int rotateValue, int size) {
+        if(size == 0 || rotateValue == 0)   return;
         reverse(nums,0,size-1);
-        reverse(nums,0,rotateValuue-1);
-        reverse(nums,rotateValuue,rotateValuue-1);
+        reverse(nums,0, rotateValue -1);
+        reverse(nums, rotateValue, size -1);
     }
 
     private static void reverse(int []nums, int start, int end) {

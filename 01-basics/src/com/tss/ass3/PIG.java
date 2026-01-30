@@ -1,4 +1,4 @@
-package com.tss.ass3.studentmanagementsystem;
+package com.tss.ass3;
 
 import java.util.Random;
 import java.util.Scanner;

@@ -18,12 +18,20 @@ public abstract class AbstractVehicle implements Vehicle {
 
     @Override
     public void start() {
+        if(running) {
+            System.out.println(getClass().getSimpleName() + " " + id + " already started");
+            return;
+        }
         running = true;
         System.out.println(getClass().getSimpleName() + " " + id + " started");
     }
 
     @Override
     public void stop() {
+        if(!running) {
+            System.out.println(getClass().getSimpleName() + " " + id + " already stopped");
+            return;
+        }
         running = false;
         System.out.println(getClass().getSimpleName() + " " + id + " stopped");
     }
