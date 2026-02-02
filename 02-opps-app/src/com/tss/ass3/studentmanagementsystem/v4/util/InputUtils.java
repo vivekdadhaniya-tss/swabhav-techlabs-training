@@ -20,6 +20,20 @@ public class InputUtils {
         }
     }
 
+    public static double readDouble(Scanner scan, String msg) {
+        while (true) {
+            try {
+                System.out.print(msg);
+                double value = scan.nextDouble();
+                scan.nextLine();
+                return value;
+            } catch (InputMismatchException e) {
+                System.out.println("Please enter a valid integer.");
+                scan.nextLine();
+            }
+        }
+    }
+
     public static int readPositiveInt(Scanner scan, String msg) {
         while (true) {
             int value = readInt(scan, msg);
@@ -30,16 +44,9 @@ public class InputUtils {
 
     public static double readPositiveDouble(Scanner scan, String msg) {
         while (true) {
-            try {
-                System.out.print(msg);
-                double value = scan.nextDouble();
-                scan.nextLine();
-                if (value > 0) return value;
-                System.out.println("Value must be greater than 0.");
-            } catch (InputMismatchException e) {
-                System.out.println("Please enter a valid amount.");
-                scan.nextLine();
-            }
+            double value = readDouble(scan, msg);
+            if (value > 0) return value;
+            System.out.println("Value must be greater than 0.");
         }
     }
 
