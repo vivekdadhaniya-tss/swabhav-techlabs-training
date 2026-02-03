@@ -77,24 +77,26 @@ public class MovieManager {
         return movies;
     }
 
-    public boolean updateMovieById(int id, String name, int year, String genre) {
-        for (Movie movie : movies) {
-            if (movie.getId() == id) {
-                movie.setName(name);
-                movie.setYear(year);
-                movie.setGenre(genre);
-                saveMovies();
-                return true;
-            }
-        }
-        return false;
+    public void updateMovieById(int id, String name, int year, String genre) {
+        Movie movie = findMovieById(id);
+        movie.setName(name);
+        movie.setYear(year);
+        movie.setGenre(genre);
+        saveMovies();
     }
 
-    public boolean deleteMovieById(int id) {
-        boolean removed = movies.removeIf(movie -> movie.getId() == id);
-        if (removed) {
-            saveMovies();
+    public void deleteMovieById(int id) {
+        Movie movie = findMovieById(id);
+        movies.remove(movie);
+        saveMovies();
+    }
+
+    private Movie findMovieById(int id) {
+        for (Movie movie : movies) {
+            if (movie.getId() == id) {
+                return movie;
+            }
         }
-        return removed;
+        throw new NoSuchMovieFoundException();
     }
 }

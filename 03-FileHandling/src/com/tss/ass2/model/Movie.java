@@ -4,7 +4,6 @@ import java.io.Serializable;
 
 public class Movie implements Serializable {
 
-    private static final long serialVersionUID = 1L;
     private static int idCounter = 1;
     private final int id;
     private String name;

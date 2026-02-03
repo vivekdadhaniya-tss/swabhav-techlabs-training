@@ -63,7 +63,8 @@ public class MovieController {
     }
 
     private void displayMovies() {
-        manager.getMovies().forEach(System.out::println);
+        manager.getMovies()
+                .forEach(System.out::println);
     }
 
     private void addMovie() {
@@ -95,26 +96,15 @@ public class MovieController {
         System.out.print("Enter new Year: ");
         int year = scanner.nextInt();
 
-        boolean updated = manager.updateMovieById(id, name, year, genre);
-
-        if (updated) {
-            System.out.println("Movie updated successfully");
-        } else {
-            System.out.println("Movie not found");
-        }
+        manager.updateMovieById(id, name, year, genre);
+        System.out.println("Movie updated successfully");
     }
 
     private void deleteMovie() {
         System.out.print("Enter Movie ID to delete: ");
         int id = scanner.nextInt();
 
-        boolean deleted = manager.deleteMovieById(id);
-
-        if (deleted) {
-            System.out.println("Movie deleted successfully");
-        } else {
-            System.out.println("Movie not found");
-        }
+        manager.deleteMovieById(id);
+        System.out.println("Movie deleted successfully");
     }
-
 }
