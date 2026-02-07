@@ -4,6 +4,9 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
+import java.util.function.BiFunction;
+import java.util.function.Consumer;
+import java.util.function.Function;
 
 public class Main {
     public static void main(String[] args) {
@@ -47,5 +50,26 @@ public class Main {
         System.out.println("\nUsing Comparator Direct: ");
         for(Student2 student : students2)
             System.out.println(student);
+
+
+        System.out.println("\n\nSort using Method Reference:");
+        List<Student2> students4 = new ArrayList<>();
+
+        students4.add(new Student2(1, 101, "vivek"));
+        students4.add(new Student2(4, 104, "smit"));
+        students4.add(new Student2(3, 103, "jay"));
+        students4.add(new Student2(2, 102, "kelvin"));
+
+//        students4.sort(Main::compareByRollNo);
+//        students4.forEach(System.out::println);
+
+        students4.sort((s1, s2) -> s1.getRollNo() - s2.getRollNo());
+        students4.forEach(s -> System.out.println(s));
+
     }
+
+    public static int compareByRollNo(Student2 s1, Student2 s2) {
+        return s1.getRollNo() - s2.getRollNo();
+    }
+
 }
