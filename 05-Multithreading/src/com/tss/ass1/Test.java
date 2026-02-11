@@ -17,7 +17,6 @@ public class Test {
         for (int i = 1; i <= 5; i++) {
             int number = i + 10;
             tasks.add(() -> {
-//                Thread.sleep(5000);
                System.out.println(Thread.currentThread().getName() + ": " + number);
                return number;
            });
