@@ -12,10 +12,11 @@ public class PrototypeDemo {
         );
 
         IDCard emp1 = template.clone();
-        emp1.setEmployeeName("John");
+        emp1.setEmployeeName("Aryan");
+        emp1.setSecurityLevel("Level 1");
 
         IDCard emp2 = template.clone();
-        emp2.setEmployeeName("Alice");
+        emp2.setEmployeeName("Aarav");
 
         System.out.println("---- Template Card ----");
         template.showCard();

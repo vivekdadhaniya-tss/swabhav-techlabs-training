@@ -29,7 +29,7 @@ Example (not readable):
 new User("Aarav", 26, "New York", "1234567890", true, true);
 ```
 
-This is called the **Telescoping Constructor Problem**.
+This situation is known as the **Telescoping Constructor Problem**.
 
 ---
 
@@ -67,7 +67,7 @@ In simple words:
 
 ---
 
-## 🔹 Example from Builder
+## 🔹 Example from Builder (Fluent Version)
 
 ```java
 public Builder city(String city) {
@@ -78,8 +78,8 @@ public Builder city(String city) {
 
 Here:
 
-* `this.city = city;` → sets value
-* `return this;` → returns same Builder object
+* `this.city = city;` → sets the value
+* `return this;` → returns the same Builder object
 
 So we can write:
 
@@ -92,8 +92,92 @@ new User.Builder("Aarav", 26)
 ```
 
 Each method returns the same `Builder`, allowing the next method to be called.
+This flowing style is called **Fluent Interface**.
 
-This flowing style of writing code is called **Fluent Interface**.
+---
+
+# 🏗 What Happens If Methods Return `void` Instead of `Builder`?
+
+## 📌 Scenario
+
+Suppose we modify the Builder methods like this:
+
+```java
+public void city(String city) {
+    this.city = city;
+}
+
+public void phone(String phone) {
+    this.phone = phone;
+}
+```
+
+Now the return type is `void` instead of `Builder`.
+
+---
+
+## ❌ What We Lose
+
+Method chaining will **not work**.
+
+This will give a compile-time error:
+
+```java
+new User.Builder("Aarav", 26)
+        .city("New York")
+        .phone("1234567890")   // ❌ ERROR
+        .build();
+```
+
+### Why?
+
+Because:
+
+* `city()` now returns `void`
+* `void` does not return an object
+* So `.phone()` cannot be called on it
+* The method chain breaks
+
+---
+
+## ✅ How It Must Be Written Now
+
+Without method chaining, we must write:
+
+```java
+User.Builder builder = new User.Builder("Aarav", 26);
+
+builder.city("New York");
+builder.phone("1234567890");
+builder.isAdmin(true);
+builder.isActive(true);
+
+User user = builder.build();
+```
+
+This works correctly.
+
+---
+
+## 🔎 Difference Between Both Approaches
+
+| With `Builder` Return Type | With `void` Return Type |
+| -------------------------- | ----------------------- |
+| Supports method chaining   | No method chaining      |
+| Fluent and readable        | More verbose            |
+| Looks clean                | Looks traditional       |
+| Uses Fluent Interface      | No Fluent Interface     |
+
+---
+
+## 🧠 Important Concept
+
+Method chaining works only when each method:
+
+* Returns the same object (`this`)
+* So the next method can be called immediately
+
+If a method returns `void`, the chain stops.
 
 ---
 
@@ -124,7 +208,7 @@ public static class Builder
 ## 🧠 Internal Working
 
 1. Builder collects data.
-2. `build()` calls private constructor.
+2. `build()` calls the private constructor.
 3. Constructor copies values from Builder.
 4. Final object is created.
 5. Fields are `final`, so object becomes immutable.
@@ -151,8 +235,15 @@ public static class Builder
 
 ---
 
+## 🎯 Final Conclusion
+
+Using `void` does **not break the Builder pattern logic**,
+but it removes the **Fluent Interface style**, making the code less readable and less expressive.
+
+---
+
 ## 🎤 One-Line Summary
 
-> Builder Pattern constructs complex objects step by step using a fluent interface, improving readability and flexibility while avoiding constructor overload problems.
+> Builder Pattern constructs complex objects step by step using a fluent interface, improving readability, flexibility, and maintainability while avoiding constructor overload problems.
 
 ---
