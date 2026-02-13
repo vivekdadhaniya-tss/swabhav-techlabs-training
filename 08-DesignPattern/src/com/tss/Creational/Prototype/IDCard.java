@@ -7,7 +7,6 @@ public class IDCard implements Prototype<IDCard> {
     private String securityLevel;
     private String employeeName;
 
-    // Normal Constructor (Used for creating template)
     public IDCard(String companyName, String companyLogo,
                   String securityLevel, String employeeName) {
         this.companyName = companyName;
@@ -16,7 +15,14 @@ public class IDCard implements Prototype<IDCard> {
         this.employeeName = employeeName;
     }
 
-    // Copy Constructor (Used for cloning)
+//    public IDCard(String employeeName) {
+//        this.companyName = Database.getCompanyName();  // DB call
+//        this.companyLogo = ApiService.getLogo();       // API call
+//        this.securityLevel = SecurityService.generateLevel();
+//        this.employeeName = employeeName;
+//    }
+
+    // Copy Constructor
     private IDCard(IDCard card) {
         this.companyName = card.companyName;
         this.companyLogo = card.companyLogo;
@@ -30,7 +36,6 @@ public class IDCard implements Prototype<IDCard> {
         return new IDCard(this);
     }
 
-    // Setter to modify clone
     public void setEmployeeName(String employeeName) {
         this.employeeName = employeeName;
     }
@@ -39,7 +44,6 @@ public class IDCard implements Prototype<IDCard> {
         this.securityLevel = securityLevel;
     }
 
-    // Display method
     public void showCard() {
         System.out.println("Company: " + companyName +
                 ", Logo: " + companyLogo +
