@@ -21,6 +21,7 @@ public class GameFacade {
     public void startGame() {
 
         Player currentPlayer = player1;
+        int moves = 0;
 
         while (true) {
             board.printBoard();
@@ -29,19 +30,31 @@ public class GameFacade {
             int row = scanner.nextInt();
             int column = scanner.nextInt();
 
-            if(!board.placeMove(row, column, currentPlayer.getSymbol())) {
+            if (row < 0 || row > 2 || column < 0 || column > 2) {
+                System.out.println("Invalid position! Enter values between 0 and 2.");
+                continue;
+            }
+
+            if (!board.placeMove(row, column, currentPlayer.getSymbol())) {
                 System.out.println("Invalid move! Try again.");
                 continue;
             }
 
-            if(validator.checkWin(board.getGrid(),  currentPlayer.getSymbol())) {
+            moves++;
+
+            if (validator.checkWin(board.getGrid(), currentPlayer.getSymbol())) {
                 board.printBoard();
                 System.out.println(currentPlayer.getName() + " wins!");
                 break;
             }
 
+            if (moves == 9) {
+                board.printBoard();
+                System.out.println("It's a draw!");
+                break;
+            }
+
             currentPlayer = (currentPlayer == player1) ? player2 : player1;
         }
-
     }
 }

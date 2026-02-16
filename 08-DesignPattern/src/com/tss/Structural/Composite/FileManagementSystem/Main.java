@@ -17,6 +17,10 @@ public class Main {
         Folder downloads = new Folder("Downloads");
         downloads.add(new File("Movie.mp4", 1000));
 
+        Folder coreJava = new Folder("core java");
+        coreJava.add(new File("java.pdf", 200));
+
+        documents.add(coreJava);
         root.add(documents);
         root.add(downloads);
         root.add(new File("System.log", 50));
