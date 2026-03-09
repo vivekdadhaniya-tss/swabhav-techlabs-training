@@ -25,6 +25,7 @@ public class CourseController {
 
             System.out.print("Enter course fees: ");
             double fees = scan.nextDouble();
+            scan.nextLine();
             if (fees < 0) {
                 System.out.println("Error: Fees cannot be negative.");
                 return;

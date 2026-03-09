@@ -23,8 +23,7 @@ public class StudentRepositoryImpl implements StudentRepository {
         List<Student> students = new ArrayList<>();
         String sql = "SELECT * FROM student";
 
-        try (Connection connection = DBConnection.connect();
-             Statement statement = connection.createStatement();
+        try (Statement statement = connection.createStatement();
              ResultSet resultSet = statement.executeQuery(sql)) {
 
             while (resultSet.next()) {
@@ -46,8 +45,7 @@ public class StudentRepositoryImpl implements StudentRepository {
     public int addNewStudent(Student student) {
         String sql = "INSERT INTO student (roll_number, name, age) VALUES (?, ?, ?) RETURNING student_id";
 
-        try (Connection connection = DBConnection.connect();
-             PreparedStatement ps = connection.prepareStatement(sql)) {
+        try (PreparedStatement ps = connection.prepareStatement(sql)) {
 
             ps.setInt(1, student.getRollNumber());
             ps.setString(2, student.getName());
@@ -74,8 +72,7 @@ public class StudentRepositoryImpl implements StudentRepository {
     public void assignCourse(int studentId, int courseId) {
         String sql = "INSERT INTO enrollment (student_id, course_id) VALUES (?, ?)";
 
-        try (Connection connection = DBConnection.connect();
-             PreparedStatement ps = connection.prepareStatement(sql)) {
+        try (PreparedStatement ps = connection.prepareStatement(sql)) {
 
             ps.setInt(1, studentId);
             ps.setInt(2, courseId);
@@ -106,8 +103,7 @@ public class StudentRepositoryImpl implements StudentRepository {
                 "JOIN student s ON e.student_id = s.student_id " +
                 "WHERE s.roll_number = ?";
 
-        try (Connection connection = DBConnection.connect();
-             PreparedStatement ps = connection.prepareStatement(sql)) {
+        try (PreparedStatement ps = connection.prepareStatement(sql)) {
 
             ps.setInt(1, rollNumber);
             try (ResultSet rs = ps.executeQuery()) {

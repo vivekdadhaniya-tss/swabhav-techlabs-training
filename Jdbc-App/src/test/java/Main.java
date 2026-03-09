@@ -27,6 +27,7 @@ public class Main {
 
             try {
                 int ch = scan.nextInt();
+                scan.nextLine();
 
                 switch (ch) {
                     case 1 -> studentController.addNewStudent();

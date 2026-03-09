@@ -11,12 +11,17 @@ import java.util.List;
 
 public class CourseRepositoryImpl implements CourseRepository {
 
+    private Connection connection;
+
+    public CourseRepositoryImpl() {
+        this.connection = DBConnection.connect();
+    }
+
     @Override
     public void addNewCourse(Course course) {
         String sql = "INSERT INTO course(course_name, fees) VALUES (?, ?)";
 
-        try (Connection connection = DBConnection.connect();
-             PreparedStatement ps = connection.prepareStatement(sql)) {
+        try (PreparedStatement ps = connection.prepareStatement(sql)) {
 
             ps.setString(1, course.getCourseName());
             ps.setDouble(2, course.getFees());
@@ -40,8 +45,7 @@ public class CourseRepositoryImpl implements CourseRepository {
         List<Course> courses = new ArrayList<>();
         String sql = "SELECT * FROM course";
 
-        try (Connection connection = DBConnection.connect();
-             Statement statement = connection.createStatement();
+        try (Statement statement = connection.createStatement();
              ResultSet rs = statement.executeQuery(sql)) {
 
             while (rs.next()) {
@@ -69,8 +73,7 @@ public class CourseRepositoryImpl implements CourseRepository {
                     WHERE c.course_id = ?
                     """;
 
-        try (Connection connection = DBConnection.connect();
-             PreparedStatement ps = connection.prepareStatement(sql)) {
+        try (PreparedStatement ps = connection.prepareStatement(sql)) {
 
             ps.setInt(1, courseId);
             try (ResultSet rs = ps.executeQuery()) {

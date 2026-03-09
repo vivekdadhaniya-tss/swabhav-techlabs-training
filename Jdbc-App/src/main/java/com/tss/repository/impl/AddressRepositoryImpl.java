@@ -10,14 +10,19 @@ import java.sql.SQLException;
 
 public class AddressRepositoryImpl implements AddressRepository {
 
+    private Connection connection;
+
+    public AddressRepositoryImpl() {
+        this.connection = DBConnection.connect();
+    }
+
     @Override
     public void addAddress(Address address) {
 
         String sql = "INSERT INTO address(student_id, city, state, pincode) VALUES (?, ?, ?, ?)";
 
         // Use try-with-resources to ensure resources are closed
-        try (Connection connection = DBConnection.connect();
-             PreparedStatement ps = connection.prepareStatement(sql)) {
+        try (PreparedStatement ps = connection.prepareStatement(sql)) {
 
             ps.setInt(1, address.getStudentId());
             ps.setString(2, address.getCity());
