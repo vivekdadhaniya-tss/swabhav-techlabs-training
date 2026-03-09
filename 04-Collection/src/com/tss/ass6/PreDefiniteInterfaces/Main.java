@@ -7,7 +7,7 @@ import java.util.function.*;
 public class Main {
     public static void main(String[] args) {
 
-        // Predicate Interfaec
+        // Predicate Interface
         Predicate<Integer> isOdd = number -> number % 2 != 0;
         System.out.println(isOdd.test(5));
 
