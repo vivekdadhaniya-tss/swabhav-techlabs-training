@@ -1,0 +1,4 @@
+Hello BufferedWriter!
+Efficient writing.
+
+Second line here.
