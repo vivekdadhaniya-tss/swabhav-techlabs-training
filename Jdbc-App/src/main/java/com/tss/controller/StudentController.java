@@ -4,10 +4,11 @@ import com.tss.entity.Address;
 import com.tss.entity.Course;
 import com.tss.entity.Student;
 import com.tss.service.AddressService;
-import com.tss.service.AddressServiceImpl;
+import com.tss.service.impl.AddressServiceImpl;
 import com.tss.service.StudentService;
-import com.tss.service.StudentServiceImpl;
+import com.tss.service.impl.StudentServiceImpl;
 
+import java.util.InputMismatchException;
 import java.util.List;
 import java.util.Scanner;
 
@@ -24,53 +25,102 @@ public class StudentController {
 
     public void getAllStudents() {
         List<Student> students = studentService.getAllStudents();
-
-        for(Student student : students) {
-            System.out.println(student);
+        if (students.isEmpty()) {
+            System.out.println("No students found.");
+        } else {
+            for(Student student : students) {
+                System.out.println(student);
+            }
         }
     }
 
     public void addNewStudent() {
+        try {
+            System.out.print("Enter Student RollNumber: ");
+            int rollNumber = scan.nextInt();
+            if (rollNumber <= 0) {
+                System.out.println("Error: Roll number must be positive.");
+                return;
+            }
 
-        System.out.print("Enter Student RollNumber: ");
-        int rollNumber = scan.nextInt();
-        System.out.print("Enter Student name: ");
-        String studentName = scan.next();
-        System.out.print("Enter Student Age: ");
-        int age = scan.nextInt();
+            System.out.print("Enter Student name: ");
+            String studentName = scan.next();
+            if (studentName == null || studentName.trim().isEmpty()) {
+                System.out.println("Error: Student name cannot be empty.");
+                return;
+            }
 
-        Student student = new Student(rollNumber, studentName, age);
-        int studentId = studentService.addNewStudent(student);
+            System.out.print("Enter Student Age: ");
+            int age = scan.nextInt();
+            if (age <= 0 || age > 150) {
+                System.out.println("Error: Please enter a valid age.");
+                return;
+            }
 
-        System.out.print("Enter city name: ");
-        String cityName = scan.next();
-        System.out.print("Enter state name: ");
-        String stateName = scan.next();
-        System.out.print("Enter pincode: ");
-        String pincode = scan.next();
+            Student student = new Student(rollNumber, studentName, age);
+            int studentId = studentService.addNewStudent(student);
 
-        Address address = new Address(studentId, cityName, stateName, pincode);
-        addressService.addAddress(address);
+            if (studentId != -1) {
+                System.out.print("Enter city name: ");
+                String cityName = scan.next();
+                System.out.print("Enter state name: ");
+                String stateName = scan.next();
+                System.out.print("Enter pincode: ");
+                String pincode = scan.next();
 
-        System.out.println("Student added successfully");
+                if (!cityName.isEmpty() && !stateName.isEmpty() && !pincode.isEmpty()) {
+                    Address address = new Address(studentId, cityName, stateName, pincode);
+                    addressService.addAddress(address);
+                    System.out.println("Student and address added successfully.");
+                } else {
+                    System.out.println("Student added, but address fields were empty.");
+                }
+            }
+        } catch (InputMismatchException e) {
+            System.out.println("Error: Invalid input format. Please enter correct data types.");
+            scan.nextLine();
+        }
     }
 
     public void assignCourseToStudent() {
-        System.out.print("Enter Student Id: ");
-        int studentId = scan.nextInt();
-        System.out.print("Enter Course Id: ");
-        int courseId = scan.nextInt();
+        try {
+            System.out.print("Enter Student Id: ");
+            int studentId = scan.nextInt();
+            System.out.print("Enter Course Id: ");
+            int courseId = scan.nextInt();
 
-        studentService.assignCourse(studentId, courseId);
-        System.out.println("Course assigned successfully");
+            if (studentId <= 0 || courseId <= 0) {
+                System.out.println("Error: IDs must be positive.");
+                return;
+            }
+
+            studentService.assignCourse(studentId, courseId);
+        } catch (InputMismatchException e) {
+            System.out.println("Error: Invalid input format.");
+            scan.nextLine();
+        }
     }
 
     public void getCoursesByStudent() {
-        System.out.print("Enter Student Roll Number: ");
-        int  studentId = scan.nextInt();
-        List<Course> courses = studentService.getCoursesByStudent(studentId);
-        for(Course course : courses) {
-            System.out.println(course);
+        try {
+            System.out.print("Enter Student Roll Number: ");
+            int rollNumber = scan.nextInt();
+            if (rollNumber <= 0) {
+                System.out.println("Error: Roll number must be positive.");
+                return;
+            }
+
+            List<Course> courses = studentService.getCoursesByStudent(rollNumber);
+            if (courses.isEmpty()) {
+                System.out.println("No courses found for this student.");
+            } else {
+                for(Course course : courses) {
+                    System.out.println(course);
+                }
+            }
+        } catch (InputMismatchException e) {
+            System.out.println("Error: Invalid input format.");
+            scan.nextLine();
         }
     }
 }

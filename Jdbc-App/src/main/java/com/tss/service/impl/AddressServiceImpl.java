@@ -1,8 +1,9 @@
-package com.tss.service;
+package com.tss.service.impl;
 
 import com.tss.entity.Address;
 import com.tss.repository.AddressRepository;
-import com.tss.repository.AddressRepositoryImpl;
+import com.tss.repository.impl.AddressRepositoryImpl;
+import com.tss.service.AddressService;
 
 public class AddressServiceImpl implements AddressService {
 

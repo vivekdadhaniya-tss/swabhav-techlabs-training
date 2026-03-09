@@ -1,9 +1,10 @@
-package com.tss.service;
+package com.tss.service.impl;
 
 import com.tss.entity.Course;
 import com.tss.entity.Student;
 import com.tss.repository.CourseRepository;
-import com.tss.repository.CourseRepositoryImpl;
+import com.tss.repository.impl.CourseRepositoryImpl;
+import com.tss.service.CourseService;
 
 import java.util.List;
 

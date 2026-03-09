@@ -17,14 +17,19 @@ public class DBConnection {
 
         try {
 
-            if(connection == null) {
+            if(connection == null || connection.isClosed()) {
                 Properties props = new Properties();
 
-                InputStream input = DBConnection.class
+                // Use try-with-resources to ensure InputStream is closed
+                try (InputStream input = DBConnection.class
                         .getClassLoader()
-                        .getResourceAsStream("db.properties");
+                        .getResourceAsStream("db.properties")) {
 
-                props.load(input);
+                    if (input == null) {
+                        throw new RuntimeException("Sorry, unable to find db.properties");
+                    }
+                    props.load(input);
+                }
 
                 String driver = props.getProperty("db.driver");
                 String url = props.getProperty("db.url");
@@ -33,18 +38,14 @@ public class DBConnection {
 
                 Class.forName(driver);
 
-                connection = DriverManager.getConnection(
-                        url,
-                        username,
-                        password
-                );
-
+                connection = DriverManager.getConnection(url, username, password);
                 System.out.println("Connection established successfully");
             }
             return connection;
 
         } catch (ClassNotFoundException | SQLException | IOException e) {
-            throw new RuntimeException(e.getMessage());
+            System.err.println("Database connection failed: " + e.getMessage());
+            throw new RuntimeException("Failed to connect to database", e);
         }
     }
 }

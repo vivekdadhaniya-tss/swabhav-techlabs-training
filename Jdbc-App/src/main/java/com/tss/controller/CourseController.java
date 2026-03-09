@@ -3,41 +3,72 @@ package com.tss.controller;
 import com.tss.entity.Course;
 import com.tss.entity.Student;
 import com.tss.service.CourseService;
-import com.tss.service.CourseServiceImpl;
+import com.tss.service.impl.CourseServiceImpl;
 
+import java.util.InputMismatchException;
 import java.util.List;
 import java.util.Scanner;
 
 public class CourseController {
 
     private static Scanner scan = new Scanner(System.in);
-
     private CourseService courseService = new CourseServiceImpl();
 
     public void addNewCourse() {
-        System.out.print("Enter course name: ");
-        String name = scan.next();
-        System.out.print("Enter course fees: ");
-        double fees = scan.nextDouble();
+        try {
+            System.out.print("Enter course name: ");
+            String name = scan.next();
+            if (name == null || name.trim().isEmpty()) {
+                System.out.println("Error: Course name cannot be empty.");
+                return;
+            }
 
-        Course course = new Course(name, fees);
-        courseService.addNewCourse(course);
+            System.out.print("Enter course fees: ");
+            double fees = scan.nextDouble();
+            if (fees < 0) {
+                System.out.println("Error: Fees cannot be negative.");
+                return;
+            }
+
+            Course course = new Course(name, fees);
+            courseService.addNewCourse(course);
+        } catch (InputMismatchException e) {
+            System.out.println("Error: Invalid input format.");
+            scan.nextLine();
+        }
     }
 
     public void getAllCourses() {
         List<Course> courses = courseService.getAllCourses();
-        for (Course c : courses) {
-            System.out.println(c);
+        if (courses.isEmpty()) {
+            System.out.println("No courses available.");
+        } else {
+            for (Course c : courses) {
+                System.out.println(c);
+            }
         }
     }
 
     public void getStudentsByCourse() {
-        System.out.print("Enter Course Id: ");
-        int courseId = scan.nextInt();
+        try {
+            System.out.print("Enter Course Id: ");
+            int courseId = scan.nextInt();
+            if (courseId <= 0) {
+                System.out.println("Error: Course ID must be positive.");
+                return;
+            }
 
-        List<Student> students = courseService.getStudentsByCourse(courseId);
-        for (Student s : students) {
-            System.out.println(s);
+            List<Student> students = courseService.getStudentsByCourse(courseId);
+            if (students.isEmpty()) {
+                System.out.println("No students enrolled in this course.");
+            } else {
+                for (Student s : students) {
+                    System.out.println(s);
+                }
+            }
+        } catch (InputMismatchException e) {
+            System.out.println("Error: Invalid input format.");
+            scan.nextLine();
         }
     }
 }

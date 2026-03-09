@@ -23,45 +23,20 @@ public class Address {
         this.pincode = pincode;
     }
 
-    public int getAddressId() {
-        return addressId;
-    }
+    public int getAddressId() { return addressId; }
+    public void setAddressId(int addressId) { this.addressId = addressId; }
 
-    public void setAddressId(int addressId) {
-        this.addressId = addressId;
-    }
+    public int getStudentId() { return studentId; }
+    public void setStudentId(int studentId) { this.studentId = studentId; }
 
-    public int getStudentId() {
-        return studentId;
-    }
+    public String getCity() { return city; }
+    public void setCity(String city) { this.city = city; }
 
-    public void setStudentId(int studentId) {
-        this.studentId = studentId;
-    }
+    public String getState() { return state; }
+    public void setState(String state) { this.state = state; }
 
-    public String getCity() {
-        return city;
-    }
-
-    public void setCity(String city) {
-        this.city = city;
-    }
-
-    public String getState() {
-        return state;
-    }
-
-    public void setState(String state) {
-        this.state = state;
-    }
-
-    public String getPincode() {
-        return pincode;
-    }
-
-    public void setPincode(String pincode) {
-        this.pincode = pincode;
-    }
+    public String getPincode() { return pincode; }
+    public void setPincode(String pincode) { this.pincode = pincode; }
 
     @Override
     public String toString() {
